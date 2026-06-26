@@ -28,7 +28,7 @@
         <div class="hub-container">
             <h2 class="hub-title">📌 ระบบงานกลุ่ม J3K0</h2>
             
-            <button id="btn-login" onclick="startApp()" class="btn btn-active">
+            <button onclick="startApp()" class="btn btn-active">
                ระบบลงทะเบียนเข้าเรียน CL301101
             </button>
 
@@ -43,55 +43,17 @@
     <div id="app-container"></div>
 
     <script>
-        // ⚠️ วาง URL ของ Apps Script ตัวล่าสุดของคุณตรงนี้ครับ
+        // ⚠️ วาง URL ของ Apps Script ตรงนี้ (ไม่ต้องลงท้ายด้วย ?lat=... แล้ว)
         const scriptUrl = "https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec";
 
         function startApp() {
-            const btn = document.getElementById('btn-login');
-            
-            // ✨ เปลี่ยนข้อความปุ่มเพื่อบอกให้ผู้ใช้มองหาป๊อปอัป
-            btn.innerText = "📍 กรุณากด 'อนุญาต' (Allow) ที่ป๊อปอัป...";
-            btn.style.pointerEvents = "none";
-            btn.style.background = "#ff9800"; // เปลี่ยนเป็นสีส้มระหว่างรอ
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        // เมื่อผู้ใช้กดอนุญาต และดึงพิกัดสำเร็จ
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        const finalUrl = scriptUrl + "?lat=" + lat + "&lng=" + lng;
-                        
-                        loadIframe(finalUrl);
-                    },
-                    function(error) {
-                        // เมื่อผู้ใช้กดไม่อนุญาต หรือเบราว์เซอร์บล็อกไว้
-                        let errorMsg = "⚠️ ไม่สามารถเข้าถึงตำแหน่งได้\n\n";
-                        if (error.code === 1) {
-                            errorMsg += "สาเหตุ: คุณไม่ได้กดอนุญาต หรือเบราว์เซอร์บล็อก GPS ไว้\n\nวิธีแก้: กรุณากดที่ไอคอนแม่กุญแจ 🔒 บนช่อง URL ด้านบน แล้วเลือกเปิด 'ตำแหน่ง (Location)'";
-                        } else {
-                            errorMsg += "สาเหตุ: สัญญาณ GPS อ่อน หรือหมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง";
-                        }
-                        
-                        alert(errorMsg);
-                        
-                        // รีเซ็ตปุ่มกลับสู่สภาพเดิม
-                        btn.innerText = "ระบบลงทะเบียนเข้าเรียน CL301101";
-                        btn.style.pointerEvents = "auto";
-                        btn.style.background = "linear-gradient(135deg, #4CAF50, #2E7D32)";
-                    },
-                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-                );
-            } else {
-                alert("เบราว์เซอร์ของคุณไม่รองรับระบบระบุตำแหน่ง");
-            }
-        }
-
-        function loadIframe(url) {
+            // ซ่อนเมนู แล้วโชว์ iframe ทันที
             document.getElementById('hub-menu').style.display = 'none';
             const appContainer = document.getElementById('app-container');
             appContainer.style.display = 'block';
-            appContainer.innerHTML = '<iframe src="' + url + '" allow="camera *;"></iframe>';
+            
+            // ใส่ allow="geolocation" เพื่ออนุญาตให้ตัว Apps Script ด้านในทำงานเรื่อง GPS ได้
+            appContainer.innerHTML = '<iframe src="' + scriptUrl + '" allow="geolocation *; camera *;"></iframe>';
             document.body.style.backgroundColor = "#fff";
         }
     </script>
