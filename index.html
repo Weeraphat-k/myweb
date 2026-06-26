@@ -1,28 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J3K0</title>
+    <title>J3K0 - ศูนย์รวมระบบงาน</title>
     <style>
-        body, html {
+        /* ตั้งค่าเริ่มต้นให้หน้าเว็บ */
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: #f0f0f0; /* สีพื้นหลังตอนโหลด */
+            min-height: 100vh;
+            background-color: #f4f7f6; /* สีพื้นหลังเว็บแบบสบายตา */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        iframe {
-            width: 100vw;
-            height: 100vh;
-            border: none;
+        
+        /* กล่องเมนูตรงกลางหน้าจอ */
+        .hub-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+        
+        .hub-title {
+            margin-top: 0;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* ตั้งค่ารูปแบบปุ่มพื้นฐาน */
+        .btn {
             display: block;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        /* ปุ่มที่ 1: สีสันสดใส (ใช้งานได้) */
+        .btn-active {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        .btn-active:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        /* ปุ่มที่ 2: สีเทา (ยังไม่เปิดใช้งาน) */
+        .btn-disabled {
+            background: #e0e0e0;
+            color: #9e9e9e;
+            cursor: not-allowed; /* เมาส์เปลี่ยนเป็นเครื่องหมายห้าม */
+            pointer-events: none; /* ป้องกันการกดคลิก */
+        }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aaaaaa;
         }
     </style>
 </head>
 <body>
-    <iframe src="https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec" 
-            allow="geolocation">
-    </iframe>
+
+    <div class="hub-container">
+        <h2 class="hub-title">📌 ชุมทางระบบงานกลุ่ม J3K0</h2>
+        
+        <a href="https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec" 
+           class="btn btn-active">
+           ระบบลงทะเบียนเข้าเรียน CL301101
+        </a>
+
+        <a href="#" class="btn btn-disabled">
+           ระบบติดตามคะแนนเข้าเรียน
+        </a>
+
+        <div class="footer">
+            Powered by J3K0 Team
+        </div>
+    </div>
+
 </body>
 </html>
