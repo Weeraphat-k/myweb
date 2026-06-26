@@ -115,19 +115,20 @@
     </div>
 
     <div id="app-container">
-        <iframe id="app-frame" allow="geolocation"></iframe>
-    </div>
+        </div>
 
     <script>
         function openApp(url) {
             // 1. ซ่อนหน้าเมนูชุมทาง
             document.getElementById('hub-menu').style.display = 'none';
             
-            // 2. เอา URL ของ Apps Script ไปใส่ใน iframe
-            document.getElementById('app-frame').src = url;
+            // 2. แสดงผลคอนเทนเนอร์แบบเต็มจอ
+            const appContainer = document.getElementById('app-container');
+            appContainer.style.display = 'block';
             
-            // 3. แสดงผล iframe แบบเต็มจอ
-            document.getElementById('app-container').style.display = 'block';
+            // 3. ✨ สร้าง iframe ขึ้นมาใหม่ตอนที่ผู้ใช้คลิกเท่านั้น 
+            // พร้อมบังคับสิทธิ์ allow="geolocation *" เพื่อให้ส่งต่อพิกัดข้ามเว็บได้สมบูรณ์
+            appContainer.innerHTML = '<iframe src="' + url + '" allow="geolocation *; camera *;" allowfullscreen></iframe>';
             
             // 4. เปลี่ยนสีพื้นหลังให้เป็นสีขาวล้วน
             document.body.style.backgroundColor = "#fff";
