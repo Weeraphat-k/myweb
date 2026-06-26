@@ -5,95 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J3K0 - ศูนย์รวมระบบงาน</title>
     <style>
-        /* ตั้งค่าเริ่มต้น */
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-color: #f4f7f6;
-        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body, html { margin: 0; padding: 0; height: 100%; background-color: #f4f7f6; }
         
-        /* -------------------------------------
-           ส่วนที่ 1: หน้าเมนูชุมทาง (Hub Menu)
-           ------------------------------------- */
-        #hub-menu {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-        }
-        .hub-container {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-        }
-        .hub-title {
-            margin-top: 0;
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: none;
-            font-family: inherit;
-        }
+        #hub-menu { display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; }
+        .hub-container { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; max-width: 450px; width: 90%; }
+        .hub-title { margin-top: 0; color: #333; font-size: 24px; margin-bottom: 30px; }
+        .btn { display: block; width: 100%; padding: 16px; margin-bottom: 20px; border-radius: 10px; font-size: 16px; font-weight: bold; transition: all 0.3s ease; border: none; font-family: inherit; }
         
-        /* ปุ่มที่ 1 (กดแล้วเปลี่ยนหน้าจอ) */
-        .btn-active {
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-        }
-        .btn-active:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
-        }
+        .btn-active { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+        .btn-active:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4); }
+        .btn-disabled { background: #e0e0e0; color: #9e9e9e; cursor: not-allowed; pointer-events: none; }
+        .footer { margin-top: 20px; font-size: 13px; color: #aaaaaa; }
 
-        /* ปุ่มที่ 2 (ยังไม่เปิดใช้งาน) */
-        .btn-disabled {
-            background: #e0e0e0;
-            color: #9e9e9e;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        .footer {
-            margin-top: 20px;
-            font-size: 13px;
-            color: #aaaaaa;
-        }
-
-        /* -------------------------------------
-           ส่วนที่ 2: กรอบแอปพลิเคชัน (iframe)
-           ------------------------------------- */
-        #app-container {
-            display: none; /* ซ่อนไว้ก่อนตอนโหลดหน้าแรก */
-            width: 100vw;
-            height: 100vh;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
+        #app-container { display: none; width: 100vw; height: 100vh; }
+        iframe { width: 100%; height: 100%; border: none; display: block; }
     </style>
 </head>
 <body>
@@ -102,7 +28,7 @@
         <div class="hub-container">
             <h2 class="hub-title">📌 ระบบงานกลุ่ม J3K0</h2>
             
-            <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec')" class="btn btn-active">
+            <button id="btn-login" onclick="startApp()" class="btn btn-active">
                ระบบลงทะเบียนเข้าเรียน CL301101
             </button>
 
@@ -114,23 +40,45 @@
         </div>
     </div>
 
-    <div id="app-container">
-        </div>
+    <div id="app-container"></div>
 
     <script>
-        function openApp(url) {
-            // 1. ซ่อนหน้าเมนูชุมทาง
+        // ⚠️ นำ URL ของ Apps Script ที่ Deploy ใหม่มาใส่ตรงนี้
+        const scriptUrl = "https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec";
+
+        function startApp() {
+            const btn = document.getElementById('btn-login');
+            btn.innerText = "📍 กำลังระบุตำแหน่งของคุณ...";
+            btn.style.pointerEvents = "none";
+
+            // ขอ GPS จาก GitHub Pages เลย!
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // เมื่อได้พิกัด ให้นำไปต่อท้าย URL
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const finalUrl = scriptUrl + "?lat=" + lat + "&lng=" + lng;
+                        
+                        loadIframe(finalUrl);
+                    },
+                    function(error) {
+                        alert("⚠️ คุณต้องอนุญาตการเข้าถึงตำแหน่ง (GPS) เพื่อลงทะเบียนเข้าเรียนครับ");
+                        btn.innerText = "ระบบลงทะเบียนเข้าเรียน CL301101";
+                        btn.style.pointerEvents = "auto";
+                    },
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                alert("เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่ง");
+            }
+        }
+
+        function loadIframe(url) {
             document.getElementById('hub-menu').style.display = 'none';
-            
-            // 2. แสดงผลคอนเทนเนอร์แบบเต็มจอ
             const appContainer = document.getElementById('app-container');
             appContainer.style.display = 'block';
-            
-            // 3. ✨ สร้าง iframe ขึ้นมาใหม่ตอนที่ผู้ใช้คลิกเท่านั้น 
-            // พร้อมบังคับสิทธิ์ allow="geolocation *" เพื่อให้ส่งต่อพิกัดข้ามเว็บได้สมบูรณ์
-            appContainer.innerHTML = '<iframe src="' + url + '" allow="geolocation *; camera *;" allowfullscreen></iframe>';
-            
-            // 4. เปลี่ยนสีพื้นหลังให้เป็นสีขาวล้วน
+            appContainer.innerHTML = '<iframe src="' + url + '"></iframe>';
             document.body.style.backgroundColor = "#fff";
         }
     </script>
