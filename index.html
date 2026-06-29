@@ -19,6 +19,8 @@
         .footer { margin-top: 20px; font-size: 13px; color: #aaaaaa; }
 
         #app-container { display: none; width: 100vw; height: 100vh; }
+        
+        /* ตัดขอบ iframe และให้แสดงผลเต็มจอ */
         iframe { width: 100%; height: 100%; border: none; display: block; }
     </style>
 </head>
@@ -42,7 +44,9 @@
 
     <div id="app-container">
         <iframe id="app-frame" 
-                allow="geolocation *; camera *; microphone *; autoplay *;">
+                allow="geolocation; camera; microphone" 
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                title="J3K0 App Frame">
         </iframe>
     </div>
 
