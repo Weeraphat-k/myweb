@@ -11,17 +11,13 @@
         #hub-menu { display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; }
         .hub-container { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; max-width: 450px; width: 90%; }
         .hub-title { margin-top: 0; color: #333; font-size: 24px; margin-bottom: 30px; }
-        .btn { display: block; width: 100%; padding: 16px; margin-bottom: 20px; border-radius: 10px; font-size: 16px; font-weight: bold; transition: all 0.3s ease; border: none; font-family: inherit; }
         
+        .btn { display: block; width: 100%; padding: 16px; margin-bottom: 20px; border-radius: 10px; font-size: 16px; font-weight: bold; transition: all 0.3s ease; border: none; font-family: inherit; }
         .btn-active { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
         .btn-active:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4); }
         .btn-disabled { background: #e0e0e0; color: #9e9e9e; cursor: not-allowed; pointer-events: none; }
-        .footer { margin-top: 20px; font-size: 13px; color: #aaaaaa; }
-
-        #app-container { display: none; width: 100vw; height: 100vh; }
         
-        /* ตัดขอบ iframe และให้แสดงผลเต็มจอ */
-        iframe { width: 100%; height: 100%; border: none; display: block; }
+        .footer { margin-top: 20px; font-size: 13px; color: #aaaaaa; }
     </style>
 </head>
 <body>
@@ -30,7 +26,7 @@
         <div class="hub-container">
             <h2 class="hub-title">📌 ระบบงานกลุ่ม J3K0</h2>
             
-            <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec')" class="btn btn-active">
+            <button onclick="window.location.href='https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec'" class="btn btn-active">
                ระบบลงทะเบียนเข้าเรียน CL301101
             </button>
 
@@ -41,29 +37,6 @@
             <div class="footer">Powered by J3K0 Team</div>
         </div>
     </div>
-
-    <div id="app-container">
-        <iframe id="app-frame" 
-                allow="geolocation; camera; microphone" 
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
-                title="J3K0 App Frame">
-        </iframe>
-    </div>
-
-    <script>
-        function openApp(url) {
-            // 1. ซ่อนหน้าเมนูชุมทาง
-            document.getElementById('hub-menu').style.display = 'none';
-            
-            // 2. ตั้งค่า src ของ iframe
-            const frame = document.getElementById('app-frame');
-            frame.src = url;
-            
-            // 3. แสดงผล iframe
-            document.getElementById('app-container').style.display = 'block';
-            document.body.style.backgroundColor = "#fff";
-        }
-    </script>
 
 </body>
 </html>
