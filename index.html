@@ -1,158 +1,298 @@
 <!DOCTYPE html>
+
 <html lang="th">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>J3K0 - ศูนย์รวมระบบงาน</title>
+
     <style>
+
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
         body, html { margin: 0; padding: 0; height: 100%; background-color: #f4f7f6; overflow: hidden; }
+
         
+
         #hub-menu { display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; }
+
         .hub-container { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; max-width: 450px; width: 90%; }
+
         .hub-title { margin-top: 0; color: #333; font-size: 24px; margin-bottom: 30px; }
+
         
+
         .btn { display: block; width: 100%; padding: 16px; margin-bottom: 20px; border-radius: 10px; font-size: 16px; font-weight: bold; transition: all 0.3s ease; border: none; font-family: inherit; }
+
         
+
         /* ปุ่มสำหรับลงทะเบียน (สีเขียว) */
+
         .btn-active { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+
         .btn-active:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4); }
+
         
+
         /* ปุ่มสำหรับแจ้งปัญหา (สีส้ม) */
+
         .btn-warning { background: linear-gradient(135deg, #f57c00, #e65100); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 124, 0, 0.3); }
+
         .btn-warning:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(245, 124, 0, 0.4); }
 
-        /* ปุ่มสำหรับติดตามคะแนน (สีฟ้า) */
+
+
+        /* ⭐️ เพิ่ม CSS ปุ่มสำหรับติดตามคะแนน (สีฟ้า) */
+
         .btn-info { background: linear-gradient(135deg, #1976d2, #0d47a1); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3); }
+
         .btn-info:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4); }
 
-        /* ปุ่มสำหรับระบบ AI (สีม่วง) */
-        .btn-ai { background: linear-gradient(135deg, #8e24aa, #512da8); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(142, 36, 170, 0.3); }
-        .btn-ai:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(142, 36, 170, 0.4); }
+
 
         .btn-disabled { background: #e0e0e0; color: #9e9e9e; cursor: not-allowed; pointer-events: none; }
+
         .footer { margin-top: 20px; font-size: 13px; color: #aaaaaa; }
 
+
+
         #app-container { display: none; width: 100vw; height: 100vh; }
+
         iframe { width: 100%; height: 100%; border: none; display: block; }
 
+
+
         /* ── CSS สำหรับ Pop-up แจ้งปัญหา ── */
+
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+
         .modal-box { background: white; padding: 30px; border-radius: 16px; max-width: 450px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: left; animation: fadeIn 0.3s ease; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
         .modal-title { margin-top: 0; color: #d32f2f; font-size: 20px; font-weight: bold; text-align: center; border-bottom: 2px solid #ffebee; padding-bottom: 15px; }
+
         .modal-rules { margin: 20px 0; font-size: 15px; color: #333; line-height: 1.6; padding-left: 20px; }
+
         .modal-rules li { margin-bottom: 12px; }
+
         .modal-alert { text-align: center; color: #d32f2f; font-weight: bold; font-size: 15px; background: #ffebee; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+
         
+
         .btn-proceed { background: linear-gradient(135deg, #ef5350, #c62828); color: white; cursor: pointer; }
+
         .btn-proceed:disabled { background: #bdbdbd; cursor: not-allowed; box-shadow: none; transform: none; }
+
         .btn-cancel { background: #e0e0e0; color: #333; cursor: pointer; margin-bottom: 0; }
+
         .btn-cancel:hover { background: #d5d5d5; }
+
     </style>
+
 </head>
+
 <body>
 
+
+
     <div id="hub-menu">
+
         <div class="hub-container">
+
             <h2 class="hub-title">📌 ระบบงานกลุ่ม J3K0</h2>
+
             
+
             <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec')" class="btn btn-active">
+
                ระบบลงทะเบียนเข้าเรียน CL301101
+
             </button>
+
+
 
             <button onclick="showReportPopup()" class="btn btn-warning">
+
                แจ้งปัญหาระบบเช็คชื่อ
+
             </button>
+
+
 
             <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbyah4U-ocawDolDLtTiCzoRXVBfIAzw7L8c9_BeUrTMlLGx4qZ_X-TFpOYLJNrMrdWLAQ/exec')" class="btn btn-info">
+
                ระบบติดตามคะแนนเข้าเรียน
+
             </button>
 
-            <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbyhed2LBshYcMpk0vVrZyYBFohG8RPTYqCDriC1IQKafcEwmuQUtl3J54v43BupjZZLgQ/exec')" class="btn btn-ai">
-               ช่วยไทยด้วย สรุปการเรียนการสอน ด้วยAI ผู้ช่วย
-            </button>
+
 
             <div class="footer">Powered by J3K0 Team</div>
+
         </div>
+
     </div>
+
+
 
     <div id="report-modal" class="modal-overlay">
+
         <div class="modal-box">
+
             <h3 class="modal-title">⚠️ ทำความเข้าใจก่อนแจ้งปัญหา</h3>
+
             <ul class="modal-rules">
+
                 <li><b>1. ภาพถ่ายแคปหน้าจอ:</b> ให้แคปหน้าจอขณะเกิดปัญหาการใช้งาน เช่น ระบบไม่สามารถเข้าถึงตำแหน่งได้ หรือเว็บไซต์ลงเช็คชื่อเสีย</li>
+
                 <li><b>2. ภาพถ่ายของตัวนักศึกษา:</b> โดยจะต้องมีองค์ประกอบคือรูปนักศึกษาที่กำลัง <u>อยู่ในชั้นเรียนเท่านั้น</u></li>
+
             </ul>
+
             <div class="modal-alert">
+
                 * ห้ามขาดภาพใดภาพหนึ่งเด็ดขาด *
+
             </div>
+
             
+
             <button id="proceed-btn" class="btn btn-proceed" disabled onclick="proceedToReport()">
+
                 ฉันเข้าใจเงื่อนไข (<span id="countdown">5</span>)
+
             </button>
+
             <button class="btn btn-cancel" onclick="closePopup()">
+
                 ยกเลิก
+
             </button>
+
         </div>
+
     </div>
+
+
 
     <div id="app-container">
+
         <iframe id="app-frame" 
+
                 allow="geolocation; camera; microphone" 
+
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
+
         </iframe>
+
     </div>
 
+
+
     <script>
+
         let countdownInterval;
-        // 🌐 คืนค่าโครงสร้างลิงก์องค์กรเต็มรูปแบบ เพื่อให้เปิดใน Iframe ร่วมกันได้
+
         const reportWebAppUrl = 'https://script.google.com/a/macros/kkumail.com/s/AKfycbzWHoQJdJlmNANgB3sZeG3UA4qRvKruwHf_UroGTH3Ua_RZfok8sM69cHYTFVH_F91G/exec';
 
+
+
         // เปิด Web App ใน Iframe
+
         function openApp(url) {
+
             document.getElementById('hub-menu').style.display = 'none';
+
             document.getElementById('app-frame').src = url;
+
             document.getElementById('app-container').style.display = 'block';
+
             document.body.style.backgroundColor = "#fff";
+
         }
+
+
 
         // เปิดหน้าต่าง Pop-up เงื่อนไข
+
         function showReportPopup() {
+
             document.getElementById('report-modal').style.display = 'flex';
+
             const btn = document.getElementById('proceed-btn');
+
             let timeLeft = 5;
+
             
+
             // รีเซ็ตปุ่ม
+
             btn.disabled = true;
+
             btn.innerHTML = `ฉันเข้าใจเงื่อนไข (<span id="countdown">${timeLeft}</span>)`;
+
             
+
             clearInterval(countdownInterval);
+
             
+
             // เริ่มนับถอยหลัง
+
             countdownInterval = setInterval(() => {
+
                 timeLeft--;
+
                 if (timeLeft > 0) {
+
                     document.getElementById('countdown').innerText = timeLeft;
+
                 } else {
+
                     clearInterval(countdownInterval);
+
                     btn.disabled = false;
+
                     btn.innerHTML = 'รับทราบ และเข้าสู่ระบบแจ้งปัญหา';
+
                 }
+
             }, 1000);
+
         }
+
+
 
         // ปิดหน้าต่าง Pop-up
+
         function closePopup() {
+
             document.getElementById('report-modal').style.display = 'none';
+
             clearInterval(countdownInterval);
+
         }
 
+
+
         // เมื่อกดยอมรับเงื่อนไข ให้เข้าสู่ระบบแจ้งปัญหา
+
         function proceedToReport() {
+
             closePopup();
+
             openApp(reportWebAppUrl);
+
         }
+
     </script>
+
 </body>
-</html>
+
+</html> 
+
