@@ -13,10 +13,12 @@
         .hub-title { margin-top: 0; color: #333; font-size: 24px; margin-bottom: 30px; }
         
         .btn { display: block; width: 100%; padding: 16px; margin-bottom: 20px; border-radius: 10px; font-size: 16px; font-weight: bold; transition: all 0.3s ease; border: none; font-family: inherit; }
+        
+        /* ปุ่มสำหรับลงทะเบียน (สีเขียว) */
         .btn-active { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
         .btn-active:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4); }
         
-        /* ปุ่มสำหรับแจ้งปัญหา */
+        /* ปุ่มสำหรับแจ้งปัญหา (สีส้ม) */
         .btn-warning { background: linear-gradient(135deg, #f57c00, #e65100); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 124, 0, 0.3); }
         .btn-warning:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(245, 124, 0, 0.4); }
 
@@ -24,7 +26,7 @@
         .btn-info { background: linear-gradient(135deg, #1976d2, #0d47a1); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3); }
         .btn-info:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4); }
 
-        /* ⭐️ เพิ่ม CSS ปุ่มสำหรับระบบ AI (สีม่วง) */
+        /* ปุ่มสำหรับระบบ AI (สีม่วง) */
         .btn-ai { background: linear-gradient(135deg, #8e24aa, #512da8); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(142, 36, 170, 0.3); }
         .btn-ai:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(142, 36, 170, 0.4); }
 
@@ -55,7 +57,7 @@
         <div class="hub-container">
             <h2 class="hub-title">📌 ระบบงานกลุ่ม J3K0</h2>
             
-            <button onclick="openApp('https://script.google.com/macros/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec')" class="btn btn-active">
+            <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec')" class="btn btn-active">
                ระบบลงทะเบียนเข้าเรียน CL301101
             </button>
 
@@ -104,8 +106,8 @@
 
     <script>
         let countdownInterval;
-        // ⭐️ อัปเดต URL ระบบแจ้งปัญหา
-        const reportWebAppUrl = 'https://script.google.com/macros/s/AKfycbzWHoQJdJlmNANgB3sZeG3UA4qRvKruwHf_UroGTH3Ua_RZfok8sM69cHYTFVH_F91G/exec';
+        // 🌐 คืนค่าโครงสร้างลิงก์องค์กรเต็มรูปแบบ เพื่อให้เปิดใน Iframe ร่วมกันได้
+        const reportWebAppUrl = 'https://script.google.com/a/macros/kkumail.com/s/AKfycbzWHoQJdJlmNANgB3sZeG3UA4qRvKruwHf_UroGTH3Ua_RZfok8sM69cHYTFVH_F91G/exec';
 
         // เปิด Web App ใน Iframe
         function openApp(url) {
