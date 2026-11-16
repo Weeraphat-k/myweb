@@ -26,15 +26,12 @@
         .btn-info { background: linear-gradient(135deg, #1976d2, #0d47a1); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3); }
         .btn-info:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4); }
 
-        /* ปุ่มสำหรับแบบประเมินการร่วมงานกลุ่ม (สีฟ้าอมเขียว Teal) */
-        .btn-eval { background: linear-gradient(135deg, #00acc1, #00796b); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 172, 193, 0.3); }
-        .btn-eval:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 172, 193, 0.4); }
-
-        /* ปุ่มสำหรับระบบ AI (สีม่วง) */
+        /* ปุ่มสำหรับระบบ AI (สีม่วง - เผื่อเปิดใช้งานในอนาคต) */
         .btn-ai { background: linear-gradient(135deg, #8e24aa, #512da8); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(142, 36, 170, 0.3); }
         .btn-ai:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(142, 36, 170, 0.4); }
 
-        .btn-disabled { background: #e0e0e0; color: #9e9e9e; cursor: not-allowed; pointer-events: none; }
+        /* สถานะปุ่มปิดใช้งาน (สีเทา) */
+        .btn-disabled { background: #e0e0e0; color: #9e9e9e; cursor: not-allowed; pointer-events: none; box-shadow: none; }
         .footer { margin-top: 20px; font-size: 13px; color: #aaaaaa; }
 
         #app-container { display: none; width: 100vw; height: 100vh; position: relative; }
@@ -65,8 +62,9 @@
         <div class="hub-container">
             <h2 class="hub-title">📌 ระบบงานกลุ่ม J3K0</h2>
             
-            <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbzYN1t1dTvZ4wURqIWgs_UM0q29_wlUmWAVUmG5ZhvQfOes7z57f-Nsuj7XdzDQYhTq/exec')" class="btn btn-active">
-               ระบบลงทะเบียนเข้าเรียน CL301101
+            <!-- แก้ไขลิงก์และชื่อปุ่มเป็น CL301313 -->
+            <button onclick="openApp('https://script.google.com/macros/s/AKfycbxHc_4a5tfGCJ5Fwd6RjRqanaWJsGhAlSWWitL2k2kfkjrelCUeVdlITC_Avo0arBQvvA/exec')" class="btn btn-active">
+               ระบบลงทะเบียนเข้าเรียน CL301313
             </button>
 
             <button onclick="showReportPopup()" class="btn btn-warning">
@@ -76,14 +74,9 @@
             <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbyah4U-ocawDolDLtTiCzoRXVBfIAzw7L8c9_BeUrTMlLGx4qZ_X-TFpOYLJNrMrdWLAQ/exec')" class="btn btn-info">
                ระบบติดตามคะแนนเข้าเรียน
             </button>
-            
-            <!-- เพิ่มปุ่มใหม่: แบบประเมินการร่วมงานกลุ่ม -->
-            <button onclick="openApp('https://script.google.com/macros/s/AKfycbwwXwl3X5VNyt935F-usezO993GYQFP_ynddwi0kPl9HUAkKY19ihIM7IABDtdm_q8VTw/exec')" class="btn btn-eval">
-               แบบประเมินการร่วมงานกลุ่ม
-            </button>
 
-            <!-- แก้ไขข้อความปุ่ม AI -->
-            <button onclick="openApp('https://script.google.com/a/macros/kkumail.com/s/AKfycbyhed2LBshYcMpk0vVrZyYBFohG8RPTYqCDriC1IQKafcEwmuQUtl3J54v43BupjZZLgQ/exec')" class="btn btn-ai">
+            <!-- ปิดใช้งานปุ่ม AI (สีเทา) -->
+            <button disabled class="btn btn-disabled">
                ใช้ระบบChatbot AI ประจำรายวิชา
             </button>
 
@@ -114,7 +107,6 @@
 
     <!-- ส่วนที่ใช้แสดงหน้าต่าง Web App -->
     <div id="app-container">
-        <!-- เพิ่มปุ่มย้อนกลับ -->
         <button class="back-btn" onclick="goBack()">← กลับหน้าหลัก</button>
         <iframe id="app-frame" 
                 allow="geolocation; camera; microphone" 
@@ -138,7 +130,7 @@
         function goBack() {
             document.getElementById('app-container').style.display = 'none';
             document.getElementById('hub-menu').style.display = 'flex';
-            document.getElementById('app-frame').src = ""; // เคลียร์ URL เพื่อไม่ให้โหลดค้าง
+            document.getElementById('app-frame').src = "";
             document.body.style.backgroundColor = "#f4f7f6";
         }
 
@@ -148,13 +140,11 @@
             const btn = document.getElementById('proceed-btn');
             let timeLeft = 5;
             
-            // รีเซ็ตปุ่ม
             btn.disabled = true;
             btn.innerHTML = `ฉันเข้าใจเงื่อนไข (<span id="countdown">${timeLeft}</span>)`;
             
             clearInterval(countdownInterval);
             
-            // เริ่มนับถอยหลัง
             countdownInterval = setInterval(() => {
                 timeLeft--;
                 if (timeLeft > 0) {
